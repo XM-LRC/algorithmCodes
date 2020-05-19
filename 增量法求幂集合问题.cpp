@@ -35,7 +35,9 @@ void disp(int n){
 }
 int main()
 {
-	int n = 5;
+	int n ;
+	cout<<"ÊäÈën = ";
+	cin>>n;
 	PSetSolve(n);
 	disp(n);
 	return 0;
