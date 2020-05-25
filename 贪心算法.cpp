@@ -9,9 +9,10 @@
 设计算法求一种最优活动安排方案，使得所有安排的活动个数最多。
 */
 #include<iostream>
-#include<string>
+#include<string.h>
 #include<algorithm>
 using namespace std;
+#define MAX 20
 struct Action
 {
     int b;//开始时间
@@ -23,21 +24,44 @@ struct Action
 
 };
 
-void solve(struct &a,int &flag,int n)
-{
-    memset(flag,0,n);
-    sort(a+1,a+1+n);
-    int pree=0;
-    for(int i=1;i<=n;i++)
-    {
-        if(a[i].b>pree)
-        {
-            flag[i]=1;
-            pree=a[i].e;
-        }
-    }
+int n=11;
+ Action A[]={
+         {0,0},{1,4},{3,5},{0,6},{5,7}
+        ,{3,8},{5,9},{6,10},{8,11},{8,12}
+        ,{2,13},{12,15}
+	       };	//下标0不用
+//求解结果表示
+int flag[MAX] = {0};		//标记选择的活动
+int Count=0;
+
+
+void solve()				//求解最大兼容活动子集
+{  memset(flag,0,sizeof(flag));	//初始化为false
+   sort(A+1,A+n+1);			//A[1..n]按活动结束时间递增排序
+   int preend=0;			//前一个兼容活动的结束时间
+   for (int i=1;i<=n;i++)		//扫描所有活动
+   {  if (A[i].b>=preend)		//找到一个兼容活动
+      {  flag[i]=1;		//选择A[i]活动
+         preend=A[i].e;		//更新preend值
+      }
+   }
 }
 
+void show(){
+    cout<<"可以安排的事物如下:"<<endl;
+    for (int i = 1;i <= n;i++){
+        if (flag[i] == 1)
+            cout<<i<<" ";
+    }
+
+}
+
+int main()
+{
+    solve();
+    show();
+    return 0;
+}
 
 
 
