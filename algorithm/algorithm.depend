@@ -1,6 +1,6 @@
 # depslib dependency file v1.0
-1589880232 source:f:\算法设计\algorithm\main.cpp
+1590483868 source:f:\算法设计\algorithm\main.cpp
 	<iostream>
-	<vector>
-	<math.h>
+	<algorithm>
+	<queue>
 
