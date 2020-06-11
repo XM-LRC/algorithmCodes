@@ -27,7 +27,7 @@ double path[maxn][maxn];	//存储路径，记录投资结果
 
 double DP()
 {
-	// 边界处理
+	// 先填写dp数组，然后发现可以先初始化一些边界
 	for(int i = 1;i <= m;i++)
 	{
 		dp[i][0] = 0;
@@ -35,28 +35,28 @@ double DP()
 	}
 	for(int j = 1;j <= n;j++)
 	{
-		dp[1][j] = a[1][j];
+		dp[1][j] = a[1][j];  // 第一家公司的情况
 		path[1][j] = j;
 	}
 
-
+    // 其他几家公司的情况
 	for(int i = 2;i <= m;i++)
 	{
 		for(int j = 1;j <= n;j++)
 		{
-			double max_res = 0;
-			double max_j = 0;
-			for(int k = 0;k <= j;k++)	//找出最大收益
+			double maxValue = 0;
+			double money = 0;
+			for(int k = 0;k <= j;k++)	// 找出最大收益
 			{
-				if(dp[i - 1][k] + a[i][j - k] > max_res)
+				if(dp[i - 1][k] + a[i][j - k] > maxValue)
 				{
-					max_res = dp[i - 1][k] + a[i][j - k];
-					max_j = j - k;	  //记录下该项目在最大利益时投资的钱
-					                  //其中，j - k表示该项目投资的钱
+					maxValue = dp[i - 1][k] + a[i][j - k];
+					money = j - k;	  // 记录下该项目在最大利益时投资的钱
+					                  // j - k表示该项目投资的钱
 				}
 			}
-			dp[i][j] = max_res;
-			path[i][j] = max_j;
+			dp[i][j] = maxValue;
+			path[i][j] = money;
 		}
 	}
 	return dp[m][n];  // 返回最大收益
@@ -74,7 +74,7 @@ int main()
 	for(int i = m - 1;i >= 1;i--)
 	{
 		cout << i << "号公司投资" << path[i][r] << "万元" << endl;
-		r = r - path[i][r];
+		r = r - path[i][r];    // 剩余投资的钱
 	}
 	return 0;
 }

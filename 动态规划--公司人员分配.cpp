@@ -7,29 +7,37 @@
 #include<iostream>
 using namespace std;
 
-const int maxn = 100;
-int m, n;					//m为商店个数，n为员工个数
-int dp[maxn][maxn];
-int a[maxn][maxn];			//分配员工数和赢利情况的表
-int path[maxn][maxn];		//存储路径，记录分配结果
+const int m = 3, n = 5;	 // m为商店个数，n为员工个数
 
-//设dp[i][j]表示，前i个商店分配j个员工能获得的最大利益值
+int dp[m+1][n+1];       // dp[i][j]表示前i个公司使用j个员工最大利润
+
+//分配员工数和赢利情况的表
+ int a[m+1][n+1] =
+{
+    {0,3, 7, 9,12,13},
+    {0,5,10,11,11,11},
+    {0,4, 6,11,12,12}
+};
+
+int path[m+1][n+1];		//存储路径，记录分配结果
+
 int DP()
 {
-	//先处理边界1
+	// 根据分析dp表，初始化边界
 	for(int i = 1;i <= m;i++)
 	{
 		dp[i][0] = 0;
 		path[i][0] = 0;
 	}
-	//边界2
+
+	// 将第1个公司初始化
 	for(int j = 1;j <= n;j++)
 	{
-		dp[1][j] = a[1][j];
+		dp[1][j] = a[1][j]; // 第1个公司的情况
 		path[1][j] = j;
 	}
 
-	//再来其他情况，遍历顺序从上到下，从左到右，是常规顺序
+	// 其他公司
 	for(int i = 2;i <= m;i++)
 	{
 		for(int j = 1;j <= n;j++)
@@ -46,6 +54,7 @@ int DP()
 			}
 			dp[i][j] = max_res;
 			path[i][j] = max_j;
+
 		}
 	}
 	//打印dp数组
@@ -74,16 +83,7 @@ int DP()
 
 int main()
 {
-	cout << "请输入商店个数和员工个数：";
-	cin >> m >> n;
-	cout << "请输入各商店分配员工数和赢利情况的表格：" << endl;
-	for(int i = 1;i <= m;i++)
-	{
-		for(int j = 0;j <= n;j++)
-		{
-			cin >> a[i][j];
-		}
-	}
+
 	cout << DP() << "万元" << endl;
 
 	//输出具体方案
